@@ -16,7 +16,7 @@ export const fetchPlugin = (inputCode: string) => {
           contents: inputCode,
         };
       });
-      //load cached module
+
       build.onLoad({ filter: /.*/ }, async (args: any) => {
         const cachedResult = await fileCache.getItem<esbuild.OnLoadResult>(
           args.path
@@ -26,7 +26,7 @@ export const fetchPlugin = (inputCode: string) => {
           return cachedResult;
         }
       });
-      //load css module
+
       build.onLoad({ filter: /.css$/ }, async (args: any) => {
         const { data, request } = await axios.get(args.path);
         const escaped = data
@@ -48,7 +48,7 @@ export const fetchPlugin = (inputCode: string) => {
 
         return result;
       });
-      //load
+
       build.onLoad({ filter: /.*/ }, async (args: any) => {
         const { data, request } = await axios.get(args.path);
 
@@ -57,7 +57,6 @@ export const fetchPlugin = (inputCode: string) => {
           contents: data,
           resolveDir: new URL("./", request.responseURL).pathname,
         };
-
         await fileCache.setItem(args.path, result);
 
         return result;
