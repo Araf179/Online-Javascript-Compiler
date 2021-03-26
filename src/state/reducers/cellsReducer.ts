@@ -1,7 +1,7 @@
-import produce from "immer";
-import { ActionType } from "../action-types";
-import { Action } from "../actions";
-import { Cell } from "../cell";
+import produce from 'immer';
+import { ActionType } from '../action-types';
+import { Action } from '../actions';
+import { Cell } from '../cell';
 
 interface CellsState {
   loading: boolean;
@@ -35,7 +35,7 @@ const reducer = produce((state: CellsState = initialState, action: Action) => {
     case ActionType.MOVE_CELL:
       const { direction } = action.payload;
       const index = state.order.findIndex((id) => id === action.payload.id);
-      const targetIndex = direction === "up" ? index - 1 : index + 1;
+      const targetIndex = direction === 'up' ? index - 1 : index + 1;
 
       if (targetIndex < 0 || targetIndex > state.order.length - 1) {
         return state;
@@ -47,7 +47,7 @@ const reducer = produce((state: CellsState = initialState, action: Action) => {
       return state;
     case ActionType.INSERT_CELL_AFTER:
       const cell: Cell = {
-        content: "",
+        content: '',
         type: action.payload.type,
         id: randomId(),
       };
@@ -59,9 +59,9 @@ const reducer = produce((state: CellsState = initialState, action: Action) => {
       );
 
       if (foundIndex < 0) {
-        state.order.unshift(cell.id!);
+        state.order.unshift(cell.id);
       } else {
-        state.order.splice(foundIndex + 1, 0, cell.id!);
+        state.order.splice(foundIndex + 1, 0, cell.id);
       }
 
       return state;
